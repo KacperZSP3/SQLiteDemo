@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    ============================================================================
+    LEKCJA: SQLite — lokalna baza danych
+    Plik: BazaDanychPage.xaml — demonstracja operacji CRUD na SQLite
+    ============================================================================
+-->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SQLiteDemo.MainPage">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto" Padding="20" RowSpacing="10">
+
+
+        <!-- ============================================================ -->
+        <!-- NAGŁÓWEK                                                      -->
+        <!-- ============================================================ -->
+        <Label Grid.Row="0"
+               Text="Notatki — SQLite"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+
+        <!-- ============================================================ -->
+        <!-- SEKCJA 1: FORMULARZ — Entry + Editor + Button                 -->
+        <!-- >>> Sekcja 7: Użycie w aplikacji                   -->
+        <!--                                                              -->
+        <!-- Entry zbiera tytuł, Editor — treść wielowierszową.           -->
+        <!-- Button zapisuje notatkę do bazy SQLite.                      -->
+        <!-- ============================================================ -->
+        <Entry Grid.Row="1"
+               x:Name="TytulEntry"
+               Placeholder="Tytuł notatki"
+               FontSize="16"
+               ClearButtonVisibility="WhileEditing" />
+        <!--
+            Sekcja 7 — Entry.Text zwraca wpisany tytuł.
+            ClearButtonVisibility pozwala szybko wyczyścić pole.
+        -->
+
+        <Editor Grid.Row="2"
+                x:Name="TrescEditor"
+                Placeholder="Treść notatki..."
+                AutoSize="TextChanges"
+                HeightRequest="70"
+                FontSize="14" />
+        <!--
+            Sekcja 7 — Editor obsługuje tekst wielowierszowy.
+            AutoSize="TextChanges" dopasowuje wysokość do tekstu.
+        -->
+
+        <Button Grid.Row="3"
+                x:Name="ZapiszButton"
+                Text="Dodaj notatkę"
+                BackgroundColor="DarkBlue"
+                TextColor="White"
+                FontAttributes="Bold"
+                Clicked="OnZapiszClicked" />
+
+
+        <!-- ============================================================ -->
+        <!-- SEKCJA 2: LICZNIK                                             -->
+        <!-- ============================================================ -->
+        <Label Grid.Row="4"
+               x:Name="LicznikLabel"
+               Text="Notatek: 0"
+               FontSize="13"
+               TextColor="Gray"
+               HorizontalOptions="Center" />
+
+
+        <!-- ============================================================ -->
+        <!-- SEKCJA 3: LISTA NOTATEK — CollectionView z DataTemplate       -->
+        <!-- >>> Sekcja 7: Wyświetlanie danych z bazy          -->
+        <!--                                                              -->
+        <!-- CollectionView wyświetla listę notatek.                      -->
+        <!-- DataTemplate definiuje jak każda notatka wygląda.            -->
+        <!-- Binding łączy właściwości modelu Notatka z kontrolkami.       -->
+        <!-- SelectionMode="Single" + SelectionChanged pozwala            -->
+        <!-- reagować na kliknięcie — edycja/usuwanie.                    -->
+        <!-- ============================================================ -->
+        <CollectionView Grid.Row="5"
+                        x:Name="NotatkiLista"
+                        SelectionMode="Single"
+                        SelectionChanged="OnNotatkaSelected">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,3" Padding="12"
+                           BorderColor="LightGray" CornerRadius="8">
+                        <VerticalStackLayout Spacing="4">
+                            <!--
+                                Binding Tytul — wyświetla wartość Notatka.Tytul
+                                Binding Tresc — wyświetla wartość Notatka.Tresc
+                                Binding DataUtworzenia — z formatowaniem daty
+                                >>> Sekcja 4.2 — właściwości modelu jako kolumny
+                            -->
+                            <Label Text="{Binding Tytul}"
+                                   FontSize="16"
+                                   FontAttributes="Bold" />
+                            <Label Text="{Binding Tresc}"
+                                   FontSize="14"
+                                   TextColor="Gray"
+                                   MaxLines="2" />
+                            <Label Text="{Binding DataUtworzenia, StringFormat='{0:dd.MM.yyyy HH:mm}'}"
+                                   FontSize="11"
+                                   TextColor="LightGray" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.EmptyView>
+                <Label Text="Brak notatek — dodaj pierwszą!"
+                       HorizontalOptions="Center"
+                       TextColor="Gray"
+                       FontSize="14"
+                       Margin="0,30,0,0" />
+            </CollectionView.EmptyView>
+        </CollectionView>
+
+
+        <!-- Stopka -->
+        <Label Grid.Row="6"
+               Text="SQLite - Demo"
+               HorizontalOptions="Center"
+               FontSize="12"
+               TextColor="Gray"
+               Margin="0,5,0,10" />
+
+    </Grid>
+
+</ContentPage>
