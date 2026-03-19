@@ -7,7 +7,7 @@ using System.Text;
 // Plik: NotatkaDatabase.cs — klasa dostępu do bazy danych
 // ============================================================================
 //
-// SPIS ODNIESIEŃ DO LEKCJI 80:
+// SPIS ODNIESIEŃ DO LEKCJI:
 //   - Init()                  → Sekcja 5.2: Lazy initialization
 //   - ZapiszNotatkeAsync()    → Sekcja 6.5: Wzorzec SaveItemAsync
 //   - PobierzWszystkieAsync() → Sekcja 6.2: Read — Table<T>().ToListAsync()
